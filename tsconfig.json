@@ -26,9 +26,9 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    // "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    // "noUncheckedSideEffectImports": true
   },
   "include": [
     "public_html/src/**/*",
@@ -39,38 +39,3 @@
     "public_html/www/dist/**/*"
   ]
 }
-
-// {
-//   "compilerOptions": {
-//     "target": "ES2022",
-//     "useDefineForClassFields": true,
-//     "module": "ESNext",
-//     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-//     "types": ["vite/client"],
-//     "skipLibCheck": true,
-
-//     "baseUrl": ".",
-
-//     "paths": {
-//       "@/*": ["public_html/src/*"],
-//       "@ts/*": ["public_html/src/ts/*"],
-//       "@scss/*": ["public_html/src/scss/*"]
-//     },
-
-//     /* Bundler mode */
-//     "moduleResolution": "bundler",
-//     "allowImportingTsExtensions": true,
-//     "verbatimModuleSyntax": true,
-//     "moduleDetection": "force",
-//     "noEmit": true,
-
-//     /* Linting */
-//     "strict": true,
-//     "noUnusedLocals": true,
-//     "noUnusedParameters": true,
-//     "erasableSyntaxOnly": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "noUncheckedSideEffectImports": true
-//   },
-//   "include": ["src"]
-// }
