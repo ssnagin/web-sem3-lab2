@@ -1,0 +1,8 @@
+<jsp-config>
+    <jsp-property-group>
+        <url-pattern>*.jsp</url-pattern>
+        <scripting-invalid>true</scripting-invalid> <!-- Запрещает скриптлеты -->
+        <include-prelude>/WEB-INF/templates/header.jspf</include-prelude> <!-- Автоматическое включение в начало -->
+        <page-encoding>UTF-8</page-encoding> <!-- Кодировка по умолчанию -->
+    </jsp-property-group>
+</jsp-config>
