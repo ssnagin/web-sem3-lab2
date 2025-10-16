@@ -1,5 +1,7 @@
 plugins {
     kotlin("jvm") version "2.1.10"
+    war
+    application
 }
 
 group = "com.ssnagin"
@@ -28,9 +30,25 @@ dependencies {
 
 }
 
+application {
+    mainClass = "com.ssnagin.Main"
+}
+
 tasks.test {
     useJUnitPlatform()
 }
+
 kotlin {
     jvmToolchain(21)
+}
+
+tasks.war {
+    webAppDirectory = file("src/main/webapp")
+    archiveFileName.set("lab2.war")
+
+    manifest {
+        attributes(
+            "Main-Class" to "com.ssnagin.Main"
+        )
+    }
 }

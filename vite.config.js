@@ -9,7 +9,7 @@ export default defineConfig({
     },
 
     build: {
-        outDir: resolve(__dirname, 'src/main/webacpp/dist'),
+        outDir: resolve(__dirname, 'src/main/webapp/dist/'),
         emptyOutDir: true,
         
         rollupOptions: {
