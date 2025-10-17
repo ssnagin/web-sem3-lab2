@@ -14,12 +14,12 @@ class LabCounter implements ElementController<HTMLElement> {
 
     setRootElement(el: HTMLElement | null): void {
         this.rootElement = el;
-        this.rootElement!.addEventListener("click", this.increment);
+        this.rootElement!.addEventListener("click", () => this.increment());
     }
 
     private setValue() {
         this.rootElement!.innerHTML = this.internalCounter.toString();
-        this.internalCounter += 1;
+        this.internalCounter -= 1;
     }
 
     private increment() {

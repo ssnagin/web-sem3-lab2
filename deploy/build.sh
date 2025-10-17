@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CONFIG_FILE="deploy.conf"
+PASSWD_FILE="deploy/PASSWD"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Загрузка конфигурации
@@ -9,6 +10,19 @@ load_config() {
         source "$CONFIG_FILE"
     elif [ -f "$SCRIPT_DIR/$CONFIG_FILE" ]; then
         source "$SCRIPT_DIR/$CONFIG_FILE"
+    fi
+}
+
+# Получение пароля
+get_password() {
+    if [ -f "$PASSWD_FILE" ]; then
+        # Берем первую строку из файла с паролем
+        PASSWORD=$(head -n 1 "$PASSWD_FILE")
+        echo "🔑 Пароль загружен из файла $PASSWD_FILE"
+    else
+        # Запрашиваем пароль у пользователя
+        read -s -p "🔑 Введите пароль SSH: " PASSWORD
+        echo
     fi
 }
 
@@ -34,6 +48,7 @@ parse_arguments() {
             -f|--filename) REMOTE_FILENAME="$2"; shift 2 ;;
             --ssh-port) SSH_PORT="$2"; shift 2 ;;
             -c|--config) CONFIG_FILE="$2"; load_config; shift 2 ;;
+            --passwd-file) PASSWD_FILE="$2"; shift 2 ;;
             -h|--help) show_help; exit 0 ;;
             *) echo "Неизвестный параметр: $1"; show_help; exit 1 ;;
         esac
@@ -52,11 +67,15 @@ OPTIONS:
   -f, --filename NAME      Имя файла на сервере
   --ssh-port PORT          SSH порт (по умолчанию: 22)
   -c, --config FILE        Конфигурационный файл
+  --passwd-file FILE       Файл с паролем (по умолчанию: PASSWD)
   -h, --help               Показать справку
 
 Конфигурационный файл (deploy.conf) может содержать:
   DEPLOY_USER, DEPLOY_IP, REMOTE_PATH, LOCAL_WAR_PATH, 
   REMOTE_FILENAME, SSH_PORT
+
+Файл с паролем (PASSWD) должен содержать пароль в первой строке.
+Если файл не существует, пароль будет запрошен интерактивно.
 
 Пример deploy.conf:
   DEPLOY_USER="s467525"
@@ -65,6 +84,9 @@ OPTIONS:
   LOCAL_WAR_PATH="build/libs/server.war"
   REMOTE_FILENAME="server.jar"
   SSH_PORT="22"
+
+Пример PASSWD файла:
+  my_secure_password
 EOF
 }
 
@@ -82,18 +104,55 @@ set_final_values() {
 
 # Проверка зависимостей
 check_dependencies() {
-    local deps=("npm" "gradlew" "scp")
+    local deps=("npm" "gradlew" "scp" "sshpass")
     for dep in "${deps[@]}"; do
         if ! command -v "$dep" &> /dev/null && [ "$dep" != "gradlew" ]; then
             echo "❌ Не найден требуемый компонент: $dep"
+            echo "Установите sshpass: sudo apt-get install sshpass"
             exit 1
         fi
     done
 }
 
+# Копирование файла с использованием пароля
+copy_with_password() {
+    local source="$1"
+    local destination="$2"
+    
+    if [ -f "$PASSWD_FILE" ]; then
+        # Используем sshpass с файлом
+        if ! sshpass -f "$PASSWD_FILE" scp -o StrictHostKeyChecking=no -P "$SSH_PORT" "$source" "$destination"; then
+            echo "❌ Ошибка при копировании на сервер"
+            return 1
+        fi
+    else
+        # Используем sshpass с переменной (менее безопасно, но работает)
+        if ! sshpass -p "$PASSWORD" scp -o StrictHostKeyChecking=no -P "$SSH_PORT" "$source" "$destination"; then
+            echo "❌ Ошибка при копировании на сервер"
+            return 1
+        fi
+    fi
+}
+
+# Выполнение команды на сервере с использованием пароля
+ssh_with_password() {
+    local command="$1"
+    
+    if [ -f "$PASSWD_FILE" ]; then
+        # Используем sshpass с файлом
+        sshpass -f "$PASSWD_FILE" ssh -o StrictHostKeyChecking=no -p "$SSH_PORT" "$USER@$IP" "$command"
+    else
+        # Используем sshpass с переменной
+        sshpass -p "$PASSWORD" ssh -o StrictHostKeyChecking=no -p "$SSH_PORT" "$USER@$IP" "$command"
+    fi
+}
+
 # Основная функция деплоя
 deploy() {
     echo "🚀 Запуск процесса деплоя..."
+    
+    # Получаем пароль
+    get_password
     
     # Сборка
     echo "🔨 Сборка фронтенда (npm)..."
@@ -116,7 +175,7 @@ deploy() {
     
     # Копирование на сервер
     echo "📤 Копирование на сервер..."
-    if ! scp -P "$SSH_PORT" "$LOCAL_WAR_PATH" "$USER@$IP:$REMOTE_FILE_PATH"; then
+    if ! copy_with_password "$LOCAL_WAR_PATH" "$USER@$IP:$REMOTE_FILE_PATH"; then
         echo "❌ Ошибка при копировании на сервер"
         return 1
     fi
@@ -129,6 +188,7 @@ deploy() {
     fi
     
     echo "✅ Деплой успешно завершен!"
+    echo "https://itmo.ssngn.ru/lab2/"
 }
 
 # Деплой на WildFly через CLI
@@ -142,24 +202,14 @@ deploy_to_wildfly() {
         --controller=$WILDFLY_HOST:$WILDFLY_PORT \
         --user=$WILDFLY_USER \
         --password=$WILDFLY_PASSWORD << EOC
-        # Undeploy старую версию если существует
-        #try {
-            undeploy $temp_war_name
-        #} catch (e) {
-        #    echo "Приложение не было развернуто ранее"
-        #}
-        
-        # Deploy новую версию
         deploy $REMOTE_FILE_PATH --name=$temp_war_name
-        
-        # Проверяем статус деплоя
         deploy -l
 EOC
 EOF
     )
     
     # Выполняем скрипт деплоя на сервере
-    ssh -p "$SSH_PORT" "$USER@$IP" "$deploy_script"
+    ssh_with_password "$deploy_script"
 }
 
 # Главная функция
@@ -173,6 +223,7 @@ main() {
     echo "SSH порт: $SSH_PORT"
     echo "Локальный файл: $LOCAL_WAR_PATH"
     echo "Удаленный путь: $REMOTE_FILE_PATH"
+    echo "Файл с паролем: $PASSWD_FILE"
     echo "========================"
     
     check_dependencies

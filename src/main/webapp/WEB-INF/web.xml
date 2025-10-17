@@ -15,19 +15,4 @@
         <servlet-name>default</servlet-name>
         <url-pattern>*.css</url-pattern>
     </servlet-mapping>
-
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>HelloWorld</servlet-name>-->
-<!--        <url-pattern>/welcome</url-pattern>-->
-<!--    </servlet-mapping>-->
-
-<!--    <jsp-config>-->
-<!--        <jsp-property-group>-->
-<!--            <url-pattern>*.jsp</url-pattern>-->
-<!--            <scripting-invalid>true</scripting-invalid> &lt;!&ndash; Запрещает скриптлеты &ndash;&gt;-->
-<!--            <include-prelude>/WEB-INF/templates/header.jspf</include-prelude> &lt;!&ndash; Автоматическое включение в начало &ndash;&gt;-->
-<!--            <page-encoding>UTF-8</page-encoding> &lt;!&ndash; Кодировка по умолчанию &ndash;&gt;-->
-<!--        </jsp-property-group>-->
-<!--    </jsp-config>-->
-
 </web-app>

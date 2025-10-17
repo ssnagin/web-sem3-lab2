@@ -11,6 +11,8 @@ export default defineConfig({
     build: {
         outDir: resolve(__dirname, 'src/main/webapp/dist/'),
         emptyOutDir: true,
+
+        sourcemap: true,
         
         rollupOptions: {
             input: {
