@@ -16,7 +16,7 @@
 
         <link rel="icon" href="assets/img/duck.png" type="image/x-icon" />
 
-        <title>Лабораторная работа</title>
+        <title>Лабораторная работа 2</title>
     </head>
     <body style="background-image: url('assets/img/итмо_bg.png'); background-repeat: repeat-x; background-size: 600px;">        
         
@@ -32,13 +32,13 @@
                         <h1 class="special-fantasy-font-block">Лабораторная работа</h1><h1 style="user-select: none;" id="counter" value="2">2</h1>
                     </div>
                     <hr>
-                    <p class="pd-10px font-code">Снагин Станислав P3215 | 321582 вар.</p>
+                    <p class="pd-10px font-code">Снагин Станислав P3215 | 73034 вар.</p>
                 </td>
             </tr>
             <tr class="sn-website-container">
                 <td class="col-4">
                     <section>
-                        <form onsubmit="submit(e)" method="post" class="sn-default-form">
+                        <form id="sn-form-1" onsubmit="${pageContext.request.contextPath}" method="post" class="sn-default-form">
                             
                             <h2>Отправить точку в полёт</h2>
 
@@ -78,7 +78,7 @@
                             </table> -->
 
                             <label for="CoordY">Координата Y</label>
-
+                            
                             <div>
                                 <input id="CoordY" pattern="-?[0-9]+(\.[0-9]+)?" title="Число от -3 до 5" class="col-12" type="text" min="-3" max="5" placeholder="    Цифорка Y" />
                             </div>
@@ -88,10 +88,10 @@
                             <table class="pd-10px col-12">
                                 <tr id="z-checkbox-container">
                                     <td><input name="z" type="radio" value="1" id="checkbox1"><label for="checkbox1"> 1</label></td>
-                                    <td><input name="z" type="radio" value="2" id="checkbox2"><label for="checkbox2"> 2</label></td>
-                                    <td><input name="z" type="radio" value="3" id="checkbox3"><label for="checkbox3"> 3</label></td>
-                                    <td><input name="z" type="radio" value="4" id="checkbox4"><label for="checkbox4"> 4</label></td>
-                                    <td><input name="z" type="radio" value="5" id="checkbox5"><label for="checkbox5"> 5</label></td>
+                                    <td><input name="z" type="radio" value="2" id="checkbox2"><label for="checkbox2"> 1.5</label></td>
+                                    <td><input name="z" type="radio" value="3" id="checkbox3"><label for="checkbox3"> 2</label></td>
+                                    <td><input name="z" type="radio" value="4" id="checkbox4"><label for="checkbox4"> 2.5</label></td>
+                                    <td><input name="z" type="radio" value="5" id="checkbox5"><label for="checkbox5"> 3</label></td>
                                 </tr>
                             </table>
 
@@ -110,19 +110,19 @@
                                 <canvas  width="450" height="450"></canvas>
                             </div>
                             <div>
+                                <h3>R = 1.5</h3>
+                                <canvas  width="450" height="450"></canvas>
+                            </div>
+                            <div>
                                 <h3>R = 2</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
                             <div>
+                                <h3>R = 2.5</h3>
+                                <canvas  width="450" height="450"></canvas>
+                            </div>
+                            <div>
                                 <h3>R = 3</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 4</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 5</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
                         </div>
@@ -135,6 +135,7 @@
 
                             <b>
                                 - Что значит хранить в контексте приложения? Точки должны быть видны всем юзерам или конкретно мне? Если мне, то session?
+                                - result.jsp?
                             </b>
                             <img src="assets/img/img.png" alt="" srcset="" />
                         </details>

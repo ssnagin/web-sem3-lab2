@@ -1,6 +1,7 @@
 'use strict'
 
 import '../sass/style.sass';
+import CustomForm from './objects/form/CustomForm';
 import { LabCounter } from './objects/labCounter/LabCounter';
 import Plane2D from './objects/plane/Plane2D';
 import PlaneManager from './objects/plane/PlaneManager';
@@ -20,11 +21,13 @@ async function onDOMContentLoaded() {
         document.getElementById("counter")!
     );
 
+    // TABLE
 
     const table : HTMLTableElement | null = document?.querySelector("#sn-form-result-table");
 
     coordsTable = new CoordsTable(table!);
 
+    // PLANES
 
     const canvases : NodeListOf<HTMLCanvasElement> | null = document.querySelectorAll(".sn-canvas-container > div > canvas");
 
@@ -33,4 +36,13 @@ async function onDOMContentLoaded() {
         planes.add(plane);
     }
 
+    // FORM
+
+    const defaultForm : HTMLElement | null = document?.querySelector(".sn-default-form");
+
+    const form = new CustomForm(
+        defaultForm!
+    );
+
+    
 }
