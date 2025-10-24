@@ -19,7 +19,7 @@ class CustomFormValidator extends Validator {
 
     static validateX(form : CustomForm) : void {
 
-        if (form.activeButton == null)
+        if (form.dropdownButton == null)
             throw new FormValidationError("Выберите X");
     }
 

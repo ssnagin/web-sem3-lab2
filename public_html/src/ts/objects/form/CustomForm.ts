@@ -16,12 +16,9 @@ class CustomForm implements ElementController<HTMLElement> {
 
     errorElement : HTMLElement | null = null;
 
-    checkboxPattern = "input[type='checkbox']";
-
-    activeButton : HTMLElement | null = null
-    buttonsPattern = "#buttons-single-choice input[type='button']";
-
     activeTextField : HTMLInputElement | null = null;
+    dropdownButton : HTMLInputElement | null = null;
+    activeRadioButton : HTMLInputElement | null = null;
 
     submitButton: HTMLElement | null = null;
 
@@ -32,15 +29,9 @@ class CustomForm implements ElementController<HTMLElement> {
     public setRootElement(element: HTMLElement): void {
         this.rootElement = element;
         this.errorElement = document.getElementById("error-field");
-
-        // BUTTONS
-
-        let buttons: NodeListOf<HTMLElement> | null = document.querySelectorAll(this.buttonsPattern);
-
-        buttons.forEach(button => {
-            button.addEventListener("click", (e: MouseEvent) => {this.handleActiveButton(e)});
-        });       
         
+        this.dropdownButton = document.querySelector(".sn-default-form #x");
+        console.log(this.dropdownButton?.value);
         // TEXT FIELD
 
         this.activeTextField = document.querySelector("#CoordY");
@@ -54,17 +45,17 @@ class CustomForm implements ElementController<HTMLElement> {
         submitBtn?.addEventListener("click", (e : MouseEvent) => this.submitForm(e));
     }
 
-    private handleActiveButton(event: MouseEvent) {
+    // private handleActiveButton(event: MouseEvent) {
 
-        const clickedButton = event.target as HTMLInputElement;
+    //     const clickedButton = event.target as HTMLInputElement;
         
-        if (clickedButton.value == "reset") {
-            this.activeButton = null;
-            return;
-        }
+    //     if (clickedButton.value == "reset") {
+    //         this.activeButton = null;
+    //         return;
+    //     }
 
-        this.activeButton = clickedButton;
-    }
+    //     this.activeButton = clickedButton;
+    // }
 
     getActiveCheckboxes() : Array<HTMLInputElement> {
 
