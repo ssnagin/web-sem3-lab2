@@ -30,10 +30,12 @@ async function onDOMContentLoaded() {
     // PLANES
 
     const canvases : NodeListOf<HTMLCanvasElement> | null = document.querySelectorAll(".sn-canvas-container > div > canvas");
-
-    for (let i = 0.5; i < canvases.length; i++) {
-        let plane : Plane2D = new Plane2D(i + 1, canvases.item(i));
+    
+    let radius = 0.5;
+    for (let i = 0; i < canvases.length; i++) {
+        let plane : Plane2D = new Plane2D(radius, canvases.item(i));
         planes.add(plane);
+        radius += 0.5;
     }
 
     // FORM

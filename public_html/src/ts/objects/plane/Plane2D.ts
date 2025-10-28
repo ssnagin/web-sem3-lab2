@@ -12,7 +12,7 @@ class Plane2D {
 
     radius: number = 1;
 
-    scale: number = 0.5;
+    scale: number = 1.5;
 
     linesXAxis: number = 10;
     linesYAxis: number = 10;
@@ -25,6 +25,8 @@ class Plane2D {
         this.canvas = canvas;
 
         this.render();
+
+        this.initListeners();
     }
 
     public clear() {
@@ -36,6 +38,35 @@ class Plane2D {
         this.points.push(point);
 
         this.render();
+    }
+
+    public initListeners() {
+        // MOUSE CLICK ON THE DESK
+
+        this.canvas.addEventListener("click", event => {
+            const rect = this.canvas.getBoundingClientRect();
+            const xCanvas = event.clientX - rect.left;
+            const yCanvas = event.clientY - rect.top;
+
+            const centerX = this.canvas.width / 2;
+            const centerY = this.canvas.height / 2;
+
+            const gridStepX = this.canvas.width / this.linesXAxis;
+            const gridStepY = this.canvas.height / this.linesYAxis;
+
+            // Смещение от центра в пикселях
+            const dx = xCanvas - centerX;
+            const dy = centerY - yCanvas; // инвертируем Y, чтобы ось шла вверх
+
+            // Переводим в логические координаты (в единицах, как на графике)
+            const logicalX = dx / (this.scale * gridStepX);
+            const logicalY = dy / (this.scale * gridStepY);
+
+            const canvasRealCoordinates = new DOMPoint(logicalX, logicalY);
+            console.log("Логические координаты:", canvasRealCoordinates);
+
+            
+        });
     }
 
     public render() {
@@ -145,13 +176,18 @@ class Plane2D {
         context.fillText('Y', centerX + 10, 15);
         context.fillText('O', centerX - 15, centerY + 15); // Начало координат
 
-        for (let i = 1; i <= 5; i++) {
+        for (let i = 1; i <= this.linesXAxis / 2 - 1; i++) {
             const value = i / this.scale;
             
             // Положительные X
             context.fillText(value.toFixed(1), centerX + gridStepX * i - 5, centerY + 15);
             // Отрицательные X
             context.fillText((-value).toFixed(1), centerX - gridStepX * i - 10, centerY + 15);
+        }
+
+        for (let i = 1; i <= this.linesYAxis / 2 - 1; i++) {
+            const value = i / this.scale;
+
             // Положительные Y
             context.fillText(value.toFixed(1), centerX + 10, centerY - gridStepY * i + 5);
             // Отрицательные Y
@@ -185,5 +221,7 @@ class Plane2D {
 
             context.restore();
         }
+
+        console.log(this);
     }
 }

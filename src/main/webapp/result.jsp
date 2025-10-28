@@ -43,48 +43,6 @@
                 </td>
                 <td class="col-8">
                     <section>
-                        <div class="sn-canvas-container">
-                            <div>
-                                <h3>R = 1</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 1.5</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 2</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 2.5</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                            <div>
-                                <h3>R = 3</h3>
-                                <canvas  width="450" height="450"></canvas>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <details open>
-                            <summary>Показать задание</summary>
-                            <br>
-                            <p>Разработать веб-приложение на базе сервлетов и JSP, определяющее попадание точки на координатной плоскости в заданную область.</p>
-
-                            <b>
-                                - Что значит хранить в контексте приложения? Точки должны быть видны всем юзерам или конкретно мне? Если мне, то session?
-                                - result.jsp?
-                            </b>
-                            <img src="assets/img/img.png" alt="" srcset="" />
-                        </details>
-                    </section>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                   <footer>
-                        <section>
                             <h2>Результаты</h2>
                             <br>
                             <button id="clear-table">Отчистить</button>
@@ -93,8 +51,7 @@
                                     
                                 </tbody>
                             </table>
-                        </section>
-                   </footer> 
+                    </section>
                 </td>
             </tr>
         </table>
