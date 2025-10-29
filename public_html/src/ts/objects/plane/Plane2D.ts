@@ -12,10 +12,10 @@ class Plane2D {
 
     radius: number = 1;
 
-    scale: number = 1.5;
+    scale: number = 1.2;
 
-    linesXAxis: number = 10;
-    linesYAxis: number = 10;
+    linesXAxis: number = 8;
+    linesYAxis: number = 8;
 
     points: DOMPoint[] = [];
 

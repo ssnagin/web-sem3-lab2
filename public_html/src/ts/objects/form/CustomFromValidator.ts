@@ -21,6 +21,10 @@ class CustomFormValidator extends Validator {
 
         if (form.dropdownButton == null)
             throw new FormValidationError("Выберите X");
+
+        if (!form.dropdownButton || !form.dropdownButton.value) {
+            throw new FormValidationError("Выберите X");
+        }
     }
 
     static validateY(form : CustomForm) : void {
@@ -45,7 +49,7 @@ class CustomFormValidator extends Validator {
 
     static validateR(form : CustomForm) : void {
         
-        let checkboxes : HTMLInputElement[] = form.getActiveCheckboxes();
+        let checkboxes : HTMLInputElement[] = form.getActiveRadiobtns();
 
         if (checkboxes.length == 0)
             throw new FormValidationError("Выберите R");

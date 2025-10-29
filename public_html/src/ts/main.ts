@@ -33,7 +33,7 @@ async function onDOMContentLoaded() {
 
     const canvases : NodeListOf<HTMLCanvasElement> | null = document.querySelectorAll(".sn-canvas-container > div > canvas");
     
-    let radius = 0.5;
+    let radius = 1;
     for (let i = 0; i < canvases.length; i++) {
         let plane : Plane2D = new Plane2D(radius, canvases.item(i));
         planes.add(plane);
@@ -55,5 +55,6 @@ function snThrowPointEvent(event : Event) {
 
     console.log("Отправляем в полет: ", point);
 
-    // customForm!.activeRadioButton = document.getElementById("r") as HTMLInputElement;
+    customForm?.updateCoordinates(point.x, point.y, point.z);
+
 }

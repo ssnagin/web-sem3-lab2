@@ -13,41 +13,56 @@ class CustomForm implements ElementController<HTMLElement> {
 
     errorElement : HTMLElement | null = null;
 
-    public activeTextField : HTMLInputElement | null = null;
-    public dropdownButton : HTMLInputElement | null = null;
-    public activeRadioButton : HTMLInputElement | null = null;
+    activeTextField : HTMLInputElement | null = null;
+    dropdownButton : HTMLInputElement | null = null;
+    activeRadioButton : HTMLInputElement | null = null;
 
     submitButton: HTMLElement | null = null;
 
     constructor(form: HTMLElement) {
-        this.setRootElement(form);
+        this.setRootElement(form!);
 
-        this.submitForm();
+        this.initListeners();
 
+        this.validateValues();
+    }
+
+    private initListeners() {
+        
         this.activeTextField!.oninput = (event) => {
-            this.submitForm();
+            this.validateValues();
         }
+        this.activeTextField?.addEventListener("input", (e) => {
+            CustomFormFormatter.formatFloatUserInput(e.target as HTMLInputElement);
+            this.validateValues();
+        });
+        // this.activeTextField?.addEventListener("change", (e) => {
+        //     CustomFormFormatter.formatFloatUserInput(e.target as HTMLInputElement);
+        //     this.validateValues();
+        // });
+
         this.dropdownButton!.onchange = (event) => {
-            this.submitForm();
+            this.validateValues();
         }
+
+        const radios = this.rootElement!.querySelectorAll('input[name="z"]');
+        radios.forEach(radio => {
+            radio.addEventListener("change", () => this.validateValues());
+        });
     }
 
     public setRootElement(element: HTMLElement): void {
         this.rootElement = element;
-        this.errorElement = document.getElementById("error-field");
+        this.errorElement = this.rootElement!.querySelector("#error-field");
         
-        this.dropdownButton = document.querySelector(".sn-default-form #x");
+        this.dropdownButton = this.rootElement!.querySelector("#x");
         console.log(this.dropdownButton?.value);
         // TEXT FIELD
-
-        this.activeTextField = document.querySelector("#CoordY");
-        this.activeTextField?.addEventListener("input", (e) => {
-            CustomFormFormatter.formatFloatUserInput(e.target as HTMLInputElement);
-        });
+        this.activeTextField = this.rootElement!.querySelector("#CoordY");
 
         // SUBMIT BUTTON
 
-        // var submitBtn : HTMLElement | null = document.getElementById("form-submit");
+        this.submitButton = this.rootElement!.querySelector("#form-submit");
         // submitBtn?.addEventListener("click", (e : MouseEvent) => this.submitForm());
     }
 
@@ -63,7 +78,7 @@ class CustomForm implements ElementController<HTMLElement> {
     //     this.activeButton = clickedButton;
     // }
 
-    getActiveCheckboxes() : Array<HTMLInputElement> {
+    getActiveRadiobtns() : Array<HTMLInputElement> {
 
         let res : HTMLInputElement[] = new Array<HTMLInputElement>;
 
@@ -77,14 +92,71 @@ class CustomForm implements ElementController<HTMLElement> {
 
         return res;
     }
+
+    private roundToAllowedX(x: number): string {
+        // Находим ближайшее из allowedXValues
+
+        let allowedXValues : string[] = [];
+
+        this.dropdownButton!.querySelectorAll("option").forEach(el => {
+            allowedXValues.push(String(el.value));
+        })
+
+        let closest = allowedXValues[0];
+        let minDiff = Math.abs(x - parseFloat(closest));
+        for (let val of allowedXValues) {
+            let diff = Math.abs(x - parseFloat(val));
+            if (diff < minDiff) {
+                closest = val;
+                minDiff = diff;
+            }
+        }
+        return closest;
+    }
+
+
+    public updateCoordinates(x: number, y: number, r: number): void;
+    public updateCoordinates(point: DOMPoint): void;
+
+    public updateCoordinates(xOrPoint: number | DOMPoint, y?: number, r?: number): void {
+        if (xOrPoint instanceof DOMPoint) {
+
+            this.updateCoordinates(xOrPoint.x, xOrPoint.y, xOrPoint.z);
+            return;
+        }
+
+        const x = xOrPoint;
+        const yVal = y!;
+        const rVal = r!;
+
+        if (this.dropdownButton) {
+            const correctedX = this.roundToAllowedX(x);
+            this.dropdownButton.value = correctedX;
+        }
+        if (this.activeTextField) {
+            this.activeTextField.value = String(yVal);
+            CustomFormFormatter.formatFloatUserInput(this.activeTextField);
+        }
+
+        const radios = this.rootElement!.querySelectorAll('input[name="z"]') as NodeListOf<HTMLInputElement>;
+        radios.forEach(radio => {
+            radio.checked = (radio.value === String(rVal));
+        });
+
+        this.validateValues(); // сразу валидируем после обновления
+    }
     
-    public submitForm() : void {
+    public validateValues() : void {
 
         try {
             CustomFormValidator.validate(this);
             this.errorElement!.innerHTML = "";
 
+            this.submitButton!.hidden = false;
+
         } catch (error) {
+            
+            this.submitButton!.hidden = true;
 
             let e : FormValidationError = error as FormValidationError;
             this.errorElement!.innerHTML = e.name + " : " + e.message;
