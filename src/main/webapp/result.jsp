@@ -1,5 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
+<%@ page import="com.ssnagin.models.Point2D" %>
+<%@ page import="java.util.List" %>
+
+<%
+    List<Point2D> coordinates = (List<Point2D>) application.getAttribute("coordinates");
+    if (coordinates == null) {
+        coordinates = new ArrayList<>();
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -49,7 +59,21 @@
                             <button id="clear-table">Отчистить</button>
                             <table class="col-6" id="sn-form-result-table">
                                 <tbody>
-                                    
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Время</th>
+                                        <th>Наносекунды</th>
+                                        <th>x</th>
+                                        <th>y</th>
+                                        <th>r</th>
+                                        <th>Ответ</th>
+                                    </tr>
+                                    <tr>
+                                        <td><%= point %></td>
+                                        <td><%= point.getX() %></td>
+                                        <td><%= point.getY() %></td>
+                                        <td><%= point.getR() %></td>
+                                    </tr>
                                 </tbody>
                             </table>
                     </section>

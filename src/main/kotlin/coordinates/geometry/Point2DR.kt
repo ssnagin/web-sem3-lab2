@@ -1,8 +1,9 @@
-package com.ssnagin.coordinates.geometry
+package com.ssnagin.servlets.coordinates.geometry
 
-
-data class Point2DR (
-    var x: Float = 0f,
-    var y: Float = 0f,
-    var R: Float = 0f,
-)
+data class Point2DR(
+    val x: Float,
+    val y: Float,
+    val R: Float
+) {
+    constructor() : this(0.0f,0.0f,0.0f)
+}

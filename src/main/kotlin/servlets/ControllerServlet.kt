@@ -23,17 +23,16 @@ class ControllerServlet : HttpPOSTServletWrapper() {
 
         val parameterNames = req.parameterNames
 
+//        while (parameterNames.hasMoreElements()) {
+//            val paramName = parameterNames.nextElement()
+//            val paramValues = req.getParameterValues(paramName)
+//
+//            println("Parameter: $paramName")
+//            paramValues?.forEach { value ->
+//                println("  Value: $value")
+//            }
+//        }
 
-        println("INCOMING REQUEST FROM ${req.localAddr}")
-        while (parameterNames.hasMoreElements()) {
-            val paramName = parameterNames.nextElement()
-            val paramValues = req.getParameterValues(paramName)
-
-            println("Parameter: $paramName")
-            paramValues?.forEach { value ->
-                println("  Value: $value")
-            }
-        }
         println(resp.toString())
 
         val name = req.getParameter("sn-form")
