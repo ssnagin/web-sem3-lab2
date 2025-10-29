@@ -1,7 +1,7 @@
 import pickRandomColor from "../../modules/color/RandomColorPicker";
 import DOMColoredPoint from "../../modules/types/DOMColoredPoint";
 
-export default
+export
 
 class Plane2D {
 
@@ -62,10 +62,15 @@ class Plane2D {
             const logicalX = dx / (this.scale * gridStepX);
             const logicalY = dy / (this.scale * gridStepY);
 
-            const canvasRealCoordinates = new DOMPoint(logicalX, logicalY);
+            const canvasRealCoordinates = new DOMPoint(logicalX, logicalY, this.radius);
             console.log("Логические координаты:", canvasRealCoordinates);
 
-            
+            // throw custom event "sn-throw-point"
+            let throwPointEvent = new CustomEvent("sn-throw-point", {
+                detail: canvasRealCoordinates
+            });
+
+            document.dispatchEvent(throwPointEvent);
         });
     }
 

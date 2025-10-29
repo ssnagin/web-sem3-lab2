@@ -1,15 +1,17 @@
 'use strict'
 
 import '../sass/style.sass';
+import DOMColoredPoint from './modules/types/DOMColoredPoint';
 import CustomForm from './objects/form/CustomForm';
 import { LabCounter } from './objects/labCounter/LabCounter';
-import Plane2D from './objects/plane/Plane2D';
+import { Plane2D } from './objects/plane/Plane2D';
 import PlaneManager from './objects/plane/PlaneManager';
 import CoordsTable from './objects/table/CoordsTable';
 
 
 var planes : PlaneManager = new PlaneManager();
 var coordsTable : CoordsTable | null = null;
+var customForm : CustomForm | null = null;
 
 document.addEventListener("DOMContentLoaded", onDOMContentLoaded);
 
@@ -24,7 +26,7 @@ async function onDOMContentLoaded() {
     // TABLE
 
     const table : HTMLTableElement | null = document?.querySelector("#sn-form-result-table");
-
+    
     coordsTable = new CoordsTable(table!);
 
     // PLANES
@@ -42,7 +44,16 @@ async function onDOMContentLoaded() {
 
     const defaultForm : HTMLElement | null = document?.querySelector(".sn-default-form");
 
-    const form = new CustomForm(
-        defaultForm!
-    );
+    customForm = new CustomForm(defaultForm!);
+
+    // ОБРАБОТКА БРОСКА
+    document.addEventListener("sn-throw-point", (event) => (snThrowPointEvent(event)))
+}
+
+function snThrowPointEvent(event : Event) {
+    const point : DOMPoint = (event as CustomEvent).detail;
+
+    console.log("Отправляем в полет: ", point);
+
+    // customForm!.activeRadioButton = document.getElementById("r") as HTMLInputElement;
 }

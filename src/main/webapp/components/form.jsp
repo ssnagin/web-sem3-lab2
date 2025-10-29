@@ -33,7 +33,7 @@
     
     <table class="pd-10px col-12">
         <tr id="z-checkbox-container">
-            <td><input name="z" type="radio" value="1" id="checkbox1"><label for="checkbox1"> 1</label></td>
+            <td><input name="z" type="radio" value="1" id="checkbox1" checked="checked"><label for="checkbox1"> 1</label></td>
             <td><input name="z" type="radio" value="2" id="checkbox2"><label for="checkbox2"> 1.5</label></td>
             <td><input name="z" type="radio" value="3" id="checkbox3"><label for="checkbox3"> 2</label></td>
             <td><input name="z" type="radio" value="4" id="checkbox4"><label for="checkbox4"> 2.5</label></td>

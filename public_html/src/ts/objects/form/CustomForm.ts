@@ -5,9 +5,6 @@ import { CustomFormFormatter } from "./CustomFormFormatter";
 import CustomFormValidator from "./CustomFromValidator";
 // import FormRequestBuilder from "./FormRequestBuilder";
 
-// var requestBuilder : FormRequestBuilder = new FormRequestBuilder();
-
-
 export default 
 
 class CustomForm implements ElementController<HTMLElement> {
@@ -16,14 +13,23 @@ class CustomForm implements ElementController<HTMLElement> {
 
     errorElement : HTMLElement | null = null;
 
-    activeTextField : HTMLInputElement | null = null;
-    dropdownButton : HTMLInputElement | null = null;
-    activeRadioButton : HTMLInputElement | null = null;
+    public activeTextField : HTMLInputElement | null = null;
+    public dropdownButton : HTMLInputElement | null = null;
+    public activeRadioButton : HTMLInputElement | null = null;
 
     submitButton: HTMLElement | null = null;
 
     constructor(form: HTMLElement) {
         this.setRootElement(form);
+
+        this.submitForm();
+
+        this.activeTextField!.oninput = (event) => {
+            this.submitForm();
+        }
+        this.dropdownButton!.onchange = (event) => {
+            this.submitForm();
+        }
     }
 
     public setRootElement(element: HTMLElement): void {
@@ -41,8 +47,8 @@ class CustomForm implements ElementController<HTMLElement> {
 
         // SUBMIT BUTTON
 
-        var submitBtn : HTMLElement | null = document.getElementById("form-submit");
-        submitBtn?.addEventListener("click", (e : MouseEvent) => this.submitForm(e));
+        // var submitBtn : HTMLElement | null = document.getElementById("form-submit");
+        // submitBtn?.addEventListener("click", (e : MouseEvent) => this.submitForm());
     }
 
     // private handleActiveButton(event: MouseEvent) {
@@ -72,7 +78,7 @@ class CustomForm implements ElementController<HTMLElement> {
         return res;
     }
     
-    public submitForm(event: MouseEvent) {
+    public submitForm() : void {
 
         try {
             CustomFormValidator.validate(this);
