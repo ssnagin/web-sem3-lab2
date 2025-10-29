@@ -56,5 +56,6 @@ function snThrowPointEvent(event : Event) {
     console.log("Отправляем в полет: ", point);
 
     customForm?.updateCoordinates(point.x, point.y, point.z);
-
+    
+    customForm?.submitButton?.click();
 }

@@ -1,13 +1,11 @@
 package com.ssnagin.controllers
 
 import com.ssnagin.controllers.wrappers.HttpPOSTServletWrapper
-import com.sun.net.httpserver.Request
 import jakarta.servlet.RequestDispatcher
 import jakarta.servlet.ServletConfig
 import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
-import java.io.Console
 
 @WebServlet("/controller")
 class ControllerServlet : HttpPOSTServletWrapper() {
@@ -19,6 +17,8 @@ class ControllerServlet : HttpPOSTServletWrapper() {
     }
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
+
+        println("1234567")
 
         println(req.toString())
         println(resp.toString())
