@@ -17,6 +17,10 @@ class AreaCheckServlet : HttpPOSTServletWrapper() {
 
         val startTime: Long = System.nanoTime()
 
+        val data = 
+
         response.sendRedirect(request.contextPath +"/result.jsp")
+
+
     }
 }

@@ -30,6 +30,7 @@
                 <td class="col-12" colspan="2">
                     <div class="headline">
                         <h1 class="special-fantasy-font-block">Лабораторная работа</h1><h1 style="user-select: none;" id="counter" value="2">2</h1>
+                        <p><a href="/">На главную</a></p>
                     </div>
                     <hr>
                     <p class="pd-10px font-code">Снагин Станислав P3215 | 73034 вар.</p>

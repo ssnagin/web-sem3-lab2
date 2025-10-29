@@ -196,13 +196,14 @@ deploy_to_wildfly() {
     local temp_war_name="${REMOTE_FILENAME%.*}"
     
     # Создаем скрипт для деплоя
+    #         deploy $REMOTE_FILE_PATH --name=$temp_war_name
     local deploy_script=$(cat << EOF
     # Подключаемся к WildFly CLI
     /opt/u0_wildfly/bin/jboss-cli.sh --connect \
         --controller=$WILDFLY_HOST:$WILDFLY_PORT \
         --user=$WILDFLY_USER \
         --password=$WILDFLY_PASSWORD << EOC
-        deploy $REMOTE_FILE_PATH --name=$temp_war_name
+
         deploy -l
 EOC
 EOF

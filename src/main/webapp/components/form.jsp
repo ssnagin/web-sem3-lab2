@@ -2,7 +2,7 @@
 
 <form id="sn-form-1" action="${pageContext.request.contextPath}/controller" method="post" class="sn-default-form">
 
-    <form-name name="sn-form" value="areaCheck"></form-name>
+    <input type="hidden" name="sn-form" value="areaCheck" hidden readonly/>
 
     <h2>Отправить точку в полёт</h2>
 

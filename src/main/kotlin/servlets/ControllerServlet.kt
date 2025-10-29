@@ -6,9 +6,12 @@ import jakarta.servlet.ServletConfig
 import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import java.util.logging.Logger
 
 @WebServlet("/controller")
 class ControllerServlet : HttpPOSTServletWrapper() {
+
+    private val logger: Logger = Logger.getLogger(ControllerServlet::class.java.name)
 
     private val REDIRECT = "index.jsp"
 
@@ -18,13 +21,23 @@ class ControllerServlet : HttpPOSTServletWrapper() {
 
     override fun doPost(req: HttpServletRequest, resp: HttpServletResponse) {
 
-        println("1234567")
+        val parameterNames = req.parameterNames
 
-        println(req.toString())
+
+        println("INCOMING REQUEST FROM ${req.localAddr}")
+        while (parameterNames.hasMoreElements()) {
+            val paramName = parameterNames.nextElement()
+            val paramValues = req.getParameterValues(paramName)
+
+            println("Parameter: $paramName")
+            paramValues?.forEach { value ->
+                println("  Value: $value")
+            }
+        }
         println(resp.toString())
 
         val name = req.getParameter("sn-form")
-        var dispatcher: RequestDispatcher? = null
+        val dispatcher: RequestDispatcher?
 
         if (name.isNullOrBlank()) {
             resp.sendRedirect(REDIRECT)
