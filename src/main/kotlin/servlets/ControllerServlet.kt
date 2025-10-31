@@ -7,6 +7,7 @@ import jakarta.servlet.annotation.WebServlet
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import java.util.logging.Logger
+import java.util.stream.Stream
 
 @WebServlet("/controller")
 class ControllerServlet : HttpPOSTServletWrapper() {
@@ -23,15 +24,15 @@ class ControllerServlet : HttpPOSTServletWrapper() {
 
         val parameterNames = req.parameterNames
 
-//        while (parameterNames.hasMoreElements()) {
-//            val paramName = parameterNames.nextElement()
-//            val paramValues = req.getParameterValues(paramName)
-//
-//            println("Parameter: $paramName")
-//            paramValues?.forEach { value ->
-//                println("  Value: $value")
-//            }
-//        }
+        while (parameterNames.hasMoreElements()) {
+            val paramName = parameterNames.nextElement()
+            val paramValues = req.getParameterValues(paramName)
+
+            println("Parameter: $paramName")
+            paramValues?.forEach { value ->
+                println("  Value: $value")
+            }
+        }
 
         println(resp.toString())
 
@@ -54,6 +55,10 @@ class ControllerServlet : HttpPOSTServletWrapper() {
             dispatcher.forward(req, resp)
 
         } catch (e : Exception) {
+            println(e.toString())
+            for (error in e.stackTrace) {
+                println(error.toString())
+            }
             resp.sendError(500)
         }
     }

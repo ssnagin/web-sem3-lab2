@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="data" uri="http://ssnagin.com/data-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,26 +33,66 @@
                     <div class="headline">
                         <h1 class="special-fantasy-font-block">Лабораторная работа</h1><h1 style="user-select: none;" id="counter" value="2">2</h1>
                     </div>
+                    <p><a color="white" href="/lab2/">На главную</a></p>
                     <hr>
-                    <p class="pd-10px font-code">Снагин Станислав P3215 | 73034 вар.</p>
+                    <p class="pd-10px font-code">Снагин Станислав P3215 | 73034 вар.</p>ё
                 </td>
             </tr>
             <tr class="sn-website-container">
                 <td class="col-4">
                     <section>
-                       <jsp:include page="/components/form.jsp" /> 
+                        <h2>Доп таска</h2>
+                        <%--                        КОД ЗДЕСЬ--%>
                     </section>
                 </td>
                 <td class="col-8">
-                    <section>
-                            <h2>Результаты</h2>
-                            <br>
-                            <button id="clear-table">Отчистить</button>
-                            <table class="col-6" id="sn-form-result-table">
-                                <tbody>
-                                    
-                                </tbody>
-                            </table>
+                    <style>
+                        .example {
+                            background: #f8f4ff;
+                            padding: 20px;
+                            border-radius: 8px;
+                            border-left: 4px solid #5c0377;
+                        }
+
+                        .example h3 {
+                            color: #5c0377;
+                            margin-top: 0;
+                        }
+
+                        .code {
+                            background: #2e1c31;
+                            color: #c489f5;
+                            padding: 15px;
+                            border-radius: 6px;
+                            font-family: 'Courier New', monospace;
+                            margin: 15px 0;
+                            overflow-x: auto;
+                        }
+                    </style>
+
+                        <section>
+                            <div class="example">
+
+                                <h3>Таблица с \t</h3>
+                                <data:table id="example3" separator="\t" sortable="true" striped="true">
+                                    ID	Наименование	Статус	Дата
+                                    001	Проект "Альфа"	Завершен	2024-01-15
+                                    002	Проект "Бета"	В работе	2024-02-20
+                                    003	Проект "Гамма"	Планируется	2024-03-10
+                                    004	Проект "Дельта"	Завершен	2024-01-30
+                                </data:table>
+                            </div>
+                            <div class="example">
+                                <h3>Таблица с сортировкой</h3>
+                                <data:table id="example1" separator=";" sortable="true" striped="true">
+                                    Имя;Возраст;Город;Зарплата
+                                    Иван Петров;25;Москва;80000
+                                    Мария Сидорова;30;Санкт-Петербург;95000
+                                    Петр Иванов;28;Казань;70000
+                                    Анна Козлова;22;Новосибирск;65000
+                                    Сергей Волков;35;Екатеринбург;110000
+                                </data:table>
+                            </div>
                     </section>
                 </td>
             </tr>

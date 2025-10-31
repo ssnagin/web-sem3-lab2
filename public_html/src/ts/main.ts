@@ -25,9 +25,9 @@ async function onDOMContentLoaded() {
 
     // TABLE
 
-    const table : HTMLTableElement | null = document?.querySelector("#sn-form-result-table");
+    // const table : HTMLTableElement | null = document?.querySelector("#sn-form-result-table");
     
-    coordsTable = new CoordsTable(table!);
+    // coordsTable = new CoordsTable(table!);
 
     // PLANES
 
@@ -39,6 +39,16 @@ async function onDOMContentLoaded() {
         planes.add(plane);
         radius += 0.5;
     }
+
+    // @ts-ignore
+    window.dots.forEach(dot => {
+
+        let color : string = Plane2D.POINT_HIT_COLOR
+
+        if (dot.hit == false) {color = Plane2D.POINT_MISS_COLOR}
+        let point = new DOMColoredPoint(color, dot.x, dot.y, dot.r)
+        planes.getByRadius(point.z)?.throwPoint(point)
+    })
 
     // FORM
 

@@ -82,7 +82,7 @@ class CustomForm implements ElementController<HTMLElement> {
 
         let res : HTMLInputElement[] = new Array<HTMLInputElement>;
 
-        let radiobtns : NodeListOf<HTMLInputElement> = document.querySelectorAll("#sn-form-1 input[type='radio']:checked");
+        let radiobtns : NodeListOf<HTMLInputElement> = document.querySelectorAll("input[name='R']:checked");
         
         if (radiobtns.length != 1) return res;
 
@@ -138,9 +138,9 @@ class CustomForm implements ElementController<HTMLElement> {
             CustomFormFormatter.formatFloatUserInput(this.activeTextField);
         }
 
-        const radios = this.rootElement!.querySelectorAll('input[name="z"]') as NodeListOf<HTMLInputElement>;
+        const radios = this.rootElement!.querySelectorAll('input[name="R"]') as NodeListOf<HTMLInputElement>;
         radios.forEach(radio => {
-            radio.checked = (radio.value === String(rVal));
+            radio.checked = (radio.value == String(rVal));
         });
 
         this.validateValues(); // сразу валидируем после обновления

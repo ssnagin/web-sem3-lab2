@@ -19,6 +19,9 @@ dependencies {
     // Jakarta Servlet API
     implementation("jakarta.servlet:jakarta.servlet-api:6.0.0")
 
+    // Jakarta Server Pages API (SimpleTagSupport)
+    implementation("jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.1")
+
     // Jakarta Persistence (JPA)
     implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
 
@@ -27,6 +30,15 @@ dependencies {
 
     // Jakarta JSON Processing
     implementation("jakarta.json:jakarta.json-api:2.1.1")
+
+    // JSTL API
+    implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0")
+    
+    // JSTL Implementation
+    implementation("org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1")
+
+    // JSP runtime
+    implementation("org.glassfish.web:jakarta.servlet.jsp:3.0.0")
 
 }
 

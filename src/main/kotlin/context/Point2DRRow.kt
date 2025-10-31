@@ -6,6 +6,6 @@ import java.time.LocalDateTime
 data class Point2DRRow (
     val point2DR: Point2DR,
     val timestamp: LocalDateTime = LocalDateTime.now(),
-    val executionTime: Long = 0,
-    val isInArea: Boolean = false
+    var executionTime: Long = 0,
+    var isInArea: Boolean = false
 ) {}

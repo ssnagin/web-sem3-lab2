@@ -1,14 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
-<%@ page import="com.ssnagin.models.Point2D" %>
+<%@ page import="com.ssnagin.context.Point2DRRow" %>
 <%@ page import="java.util.List" %>
-
-<%
-    List<Point2D> coordinates = (List<Point2D>) application.getAttribute("coordinates");
-    if (coordinates == null) {
-        coordinates = new ArrayList<>();
-    }
-%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,25 +18,21 @@
         <link rel="stylesheet" href="dist/css/main.css" />
 
         <!-- DUCK (?) -->
-
         <link rel="icon" href="assets/img/duck.png" type="image/x-icon" />
 
         <title>Лабораторная работа 2</title>
     </head>
-    <body style="background-image: url('assets/img/итмо_bg.png'); background-repeat: repeat-x; background-size: 600px;">        
-        
+    <body style="background-image: url('assets/img/итмо_bg.png'); background-repeat: repeat-x; background-size: 600px;">
+
         <a href="https://github.com/ssnagin/web-sem3-lab2" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill: #2e1c31; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-        
-        <table 
-            border="0"
-            class="col-12"
-        >
+
+        <table border="0" class="col-12">
             <tr class="header">
                 <td class="col-12" colspan="2">
                     <div class="headline">
                         <h1 class="special-fantasy-font-block">Лабораторная работа</h1><h1 style="user-select: none;" id="counter" value="2">2</h1>
-                        <p><a href="/">На главную</a></p>
                     </div>
+                    <p><a color="white" href="/lab2/">На главную</a></p>
                     <hr>
                     <p class="pd-10px font-code">Снагин Станислав P3215 | 73034 вар.</p>
                 </td>
@@ -49,33 +40,111 @@
             <tr class="sn-website-container">
                 <td class="col-4">
                     <section>
-                       <jsp:include page="/components/form.jsp" /> 
+                       <jsp:include page="/components/form.jsp" />
                     </section>
                 </td>
                 <td class="col-8">
                     <section>
-                            <h2>Результаты</h2>
-                            <br>
-                            <button id="clear-table">Отчистить</button>
-                            <table class="col-6" id="sn-form-result-table">
-                                <tbody>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Время</th>
-                                        <th>Наносекунды</th>
-                                        <th>x</th>
-                                        <th>y</th>
-                                        <th>r</th>
-                                        <th>Ответ</th>
-                                    </tr>
-                                    <tr>
-                                        <td><%= point %></td>
-                                        <td><%= point.getX() %></td>
-                                        <td><%= point.getY() %></td>
-                                        <td><%= point.getR() %></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <h2>Результаты</h2>
+                        <br>
+                        <form method="post" action="${pageContext.request.contextPath}/controller">
+                            <input type="hidden" name="sn-form" value="clearCoordinates" hidden readonly/>
+                            <button id="clear-table">Очистить</button>
+                        </form>
+
+                        <table class="col-6" id="sn-form-result-table">
+                            <tbody>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Время</th>
+                                    <th>Наносекунды</th>
+                                    <th>x</th>
+                                    <th>y</th>
+                                    <th>r</th>
+                                    <th>Ответ</th>
+                                </tr>
+                                <%
+                                    List<Point2DRRow> coordinates = (List<Point2DRRow>) application.getAttribute("coordinates");
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
+
+                                    if (coordinates == null || coordinates.isEmpty()) {
+                                %>
+                                <tr>
+                                    <td colspan="7" class="empty-table">Упс, тут ничего нет!</td>
+                                </tr>
+                                <%
+                                } else {
+                                    int i = 1;
+                                    for (Point2DRRow row : coordinates) {
+                                        String formattedTime = row.getTimestamp().format(formatter);
+                                        String statusClass = row.isInArea() ? "status-ok" : "status-miss";
+                                        String statusText = row.isInArea() ? "OK" : "MISS";
+                                %>
+                                <tr>
+                                    <td><%= i++ %></td>
+                                    <td><%= formattedTime %></td>
+                                    <td><%= row.getExecutionTime() %> ns</td>
+                                    <td><%= String.format("%.3f", row.getPoint2DR().getX()) %></td>
+                                    <td><%= String.format("%.3f", row.getPoint2DR().getY()) %></td>
+                                    <td><%= String.format("%.1f", row.getPoint2DR().getR()) %></td>
+                                    <td class="<%= statusClass %>"><%= statusText %></td>
+                                </tr>
+                                <%
+                                        }
+                                    }
+                                %>
+                            </tbody>
+                        </table>
+                        <style>
+                            #sn-form-result-table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 12px;
+                                font-size: 0.95em;
+                            }
+                            #sn-form-result-table th,
+                            #sn-form-result-table td {
+                                padding: 10px 12px;
+                                text-align: center;
+                                border-bottom: 1px solid #ccc;
+                            }
+                            #sn-form-result-table th {
+                                background-color: #f5f5f5;
+                                font-weight: 600;
+                            }
+                            .status-ok {
+                                color: #2e7d32;
+                                font-weight: bold;
+                            }
+                            .status-miss {
+                                color: #c62828;
+                                font-weight: bold;
+                            }
+                            footer section {
+                                padding: 20px 0;
+                            }
+                            button#clear-table {
+                                background: #2e1c31;
+                                color: white;
+                                border: none;
+                                padding: 8px 16px;
+                                border-radius: 4px;
+                                cursor: pointer;
+                                font-size: 0.95em;
+                                margin-bottom: 12px;
+                            }
+                            button#clear-table:hover {
+                                opacity: 0.9;
+                            }
+                            .empty-table {
+                                text-align: center;
+                                color: #777;
+                                font-style: italic;
+                            }
+                        </style>
+                    </section>
+                    <section>
+
                     </section>
                 </td>
             </tr>

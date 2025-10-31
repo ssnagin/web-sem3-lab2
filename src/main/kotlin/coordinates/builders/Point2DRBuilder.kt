@@ -10,7 +10,7 @@ object Point2DRBuilder {
         val y = BigDecimal(yObj.toString())  // Fixed: was xObj.toString()
         val r = BigDecimal(RObj.toString())  // Fixed: was xObj.toString()
 
-        if (y > BigDecimal("3")) {
+        if (y > BigDecimal("5")) {
             throw NumberFormatException("!!")
         }
 
