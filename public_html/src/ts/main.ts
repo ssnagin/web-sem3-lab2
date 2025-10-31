@@ -50,6 +50,14 @@ async function onDOMContentLoaded() {
         planes.getByRadius(point.z)?.throwPoint(point)
     })
 
+    const radiusRadios = document.querySelectorAll('input[name="R"]') as NodeListOf<HTMLInputElement>;
+    radiusRadios.forEach(radio => {
+        radio.addEventListener("change", () => {
+            const r = parseFloat(radio.value);
+            showPlaneByRadius(r);
+        });
+    });
+
     // FORM
 
     const defaultForm : HTMLElement | null = document?.querySelector(".sn-default-form");
@@ -58,6 +66,8 @@ async function onDOMContentLoaded() {
 
     // ОБРАБОТКА БРОСКА
     document.addEventListener("sn-throw-point", (event) => (snThrowPointEvent(event)))
+
+    // showPlaneByRadius(1);
 }
 
 function snThrowPointEvent(event : Event) {
@@ -68,4 +78,16 @@ function snThrowPointEvent(event : Event) {
     customForm?.updateCoordinates(point.x, point.y, point.z);
     
     customForm?.submitButton?.click();
+}
+
+function showPlaneByRadius(targetRadius: number) {
+    const containers = document.querySelectorAll(".sn-canvas-container > div");
+    containers.forEach(container => {
+        const r = parseFloat(container.getAttribute("data-radius") || "0");
+        if (Math.abs(r - targetRadius) < 1e-6) {
+            container.classList.remove("hidden");
+        } else {
+            container.classList.add("hidden");
+        }
+    });
 }

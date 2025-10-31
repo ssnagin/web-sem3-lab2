@@ -46,23 +46,31 @@
                 <td class="col-8">
                     <section>
                         <div class="sn-canvas-container">
-                            <div>
+
+                            <%-- <div class="sn-canvas-container">
+                                <div>
+                                    <h3 id="plane-radius-label">R = <span id="current-radius">1</span></h3>
+                                    <canvas id="main-plane" width="450" height="450"></canvas>
+                                </div>
+                            </div> --%>
+
+                            <div data-radius="1">
                                 <h3>R = 1</h3>
-                                <canvas  width="450" height="450"></canvas>
+                                <canvas width="450" height="450"></canvas>
                             </div>
-                            <div>
+                            <div data-radius="1.5">
                                 <h3>R = 1.5</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
-                            <div>
+                            <div data-radius="2">
                                 <h3>R = 2</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
-                            <div>
+                            <div data-radius="2.5">
                                 <h3>R = 2.5</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
-                            <div>
+                            <div data-radius="3">
                                 <h3>R = 3</h3>
                                 <canvas  width="450" height="450"></canvas>
                             </div>
