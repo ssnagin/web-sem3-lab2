@@ -67,7 +67,7 @@ async function onDOMContentLoaded() {
     // ОБРАБОТКА БРОСКА
     document.addEventListener("sn-throw-point", (event) => (snThrowPointEvent(event)))
 
-    // showPlaneByRadius(1);
+    showPlaneByRadius(1);
 }
 
 function snThrowPointEvent(event : Event) {
