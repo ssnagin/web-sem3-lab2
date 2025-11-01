@@ -73,7 +73,7 @@
                         <section>
                             <div class="example">
 
-                                <h3>Таблица с \t</h3>
+                                <h3>Много строчек</h3>
                                 <data:table id="example2" separator=";" sortable="true" striped="true" pageSize="10">
                                 Имя;Возраст;Город;Зарплата
                                 Иван Петров;25;Москва;80000

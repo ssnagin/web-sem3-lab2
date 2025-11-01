@@ -14,7 +14,7 @@
 
     @WebServlet("/areaCheck")
     class AreaCheckServlet : HttpPOSTServletWrapper() {
-
+        
         override fun init(config : ServletConfig) {
             super.init(config)
         }
@@ -50,6 +50,7 @@
 
                 System.out.println(pointRow.toString())
                 val rows = (context.getAttribute("coordinates") as? MutableList<Point2DRRow>) ?: mutableListOf()
+
                 rows.add(pointRow)
                 context.setAttribute("coordinates", rows)
                 println("Saved to context: ${rows.size} rows total")
@@ -58,6 +59,6 @@
                 response.sendError(500, "ERROR couldn't add coordinates for $pointRow")
             }
 
-            request.getRequestDispatcher("/result.jsp").forward(request, response);
+            request.getRequestDispatcher("/result.jsp").forward(request, response)
         }
     }

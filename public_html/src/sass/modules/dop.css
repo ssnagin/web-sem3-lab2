@@ -1,0 +1,79 @@
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(99, 99, 99, 0.2);
+}
+
+.data-table th,
+.data-table td {
+    border: 1px solid #c489f5;
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #5c0377;
+    color: #ffffff;
+    font-weight: bold;
+    position: relative;
+}
+
+.data-table.striped tbody tr:nth-child(even) {
+    background-color: #f1e9f8;
+}
+
+.data-table.striped tbody tr:hover {
+    background-color: #e6d6f7;
+    transition: background-color 0.3s ease;
+}
+
+.sort-indicator {
+    margin-left: 8px;
+    color: #c489f5;
+    font-size: 0.9em;
+    position: absolute;
+    right: 8px;
+}
+
+.data-table th[data-sort] {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.3s ease;
+}
+
+.data-table th[data-sort]:hover {
+    background-color: #770599;
+}
+
+.data-table-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.data-table-pagination button {
+    border: 1px solid #5c0377;
+    background: #f1e9f8;
+    color: #5c0377;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 6px 12px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.data-table-pagination button:hover {
+    background: #5c0377;
+    color: white;
+}
+
+.data-table-pagination button:active {
+    transform: scale(0.95);
+}

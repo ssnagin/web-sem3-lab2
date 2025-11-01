@@ -96,7 +96,6 @@
         <script>
             window.dots = [
                 <%
-
                     List<Point2DRRow> coordinates = (List<Point2DRRow>) application.getAttribute("coordinates");
                     if (coordinates != null && !coordinates.isEmpty()) {
                         boolean first = true;

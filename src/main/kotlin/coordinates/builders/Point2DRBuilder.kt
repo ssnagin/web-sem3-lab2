@@ -19,6 +19,5 @@ object Point2DRBuilder {
             y = y.toFloat(),
             R = r.toFloat()
         )
-
     }
 }
